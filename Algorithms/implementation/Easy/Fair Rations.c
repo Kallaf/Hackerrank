@@ -2,28 +2,22 @@
 
 int main()
 {
-    int n;
-    int loaves[1005];
+    int n,reminder = 0,input,ans = 0;
     scanf("%d",&n);
-    int sum = 0;
-    for(int i=0;i<n;i++)
-    {
-        scanf("%d",&loaves[i]);
-        sum += loaves[i];
-    }
-    if(sum%2)
-        printf("NO\n");
-    else {
-        int ans = 0,flag = 1;
-        for(int i=0;i<n-1;i++)
+    for(int i=0;i<n-1;i++)
+    {    
+        scanf("%d",&input);
+        if((input+reminder)%2)
         {
-            if(loaves[i]%2)
-            {
-                loaves[i+1]++;
-                ans += 2;
-            }
-        }
-        printf("%d\n",ans);
+            ans += 2;
+            reminder = 1;
+        }else 
+            reminder = 0;
     }
+    scanf("%d",&input);
+    if((input+reminder)%2)
+        printf("NO\n");
+    else 
+        printf("%d\n",ans);
 
 }
