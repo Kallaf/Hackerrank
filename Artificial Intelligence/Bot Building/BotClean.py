@@ -2,24 +2,31 @@
 
 # Head ends here
 
+import sys # Library for INT_MAX 
+
 def next_move(posr, posc, board):
-    if board[posr][posc] == 'd':
-        board[posr][posc] = "_"
+    if(board[posr][posc] == 'd'):
         print("CLEAN")
         return
-    if posc != 0:
-        for col in range(posc-1,-1,-1):
-            if board[posr][col] == 'd':
-                print("LEFT")
-                return
-    if posc != 4:
-        for col in range(posc+1,5):
-            if board[posr][col] == 'd':
-                print("RIGHT")
-                return
-    print("DOWN")
-    return
-        
+    mn = 100000
+    nxt = [0,0]
+    for i in range(0,5):
+        for j in range(0,5):
+            if board[i][j] == 'd':
+                distance = abs(posr-i) + abs(posc-j)
+                if distance < mn:
+                    mn = distance
+                    nxt[0] = i
+                    nxt[1] = j
+    if posr == nxt[0]:
+        if nxt[1] > posc:
+            print("RIGHT")
+        else:
+            print("LEFT")
+    elif posr < nxt[0]:
+        print("DOWN")
+    else:
+        print("UP")
 
 # Tail starts here
 
