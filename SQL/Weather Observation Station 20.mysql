@@ -1,0 +1,11 @@
+SET @rowindex := -1;
+ 
+SELECT
+   round(AVG(s.LAT_N),4)
+FROM
+   (SELECT @rowindex:=@rowindex + 1 AS rowindex,
+           station.LAT_N AS LAT_N
+    FROM station
+    ORDER BY station.LAT_N) AS s
+WHERE
+s.rowindex IN (FLOOR(@rowindex / 2) , CEIL(@rowindex / 2));
