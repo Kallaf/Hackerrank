@@ -1,0 +1,13 @@
+select c.hacker_id,h.name,count(c.challenge_id)as x
+from hackers as h
+inner join challenges as c on c.hacker_id = h.hacker_id
+group by h.hacker_id , h.name
+having 
+x = (select max(y.cnt)
+from (select count(hacker_id) as cnt from challenges group by hacker_id order by hacker_id) as y)
+or
+x in (select z.cnt from (select count(*) as cnt from challenges group by hacker_id ) as z
+         group by z.cnt
+         having count(z.cnt)=1)
+
+order by x desc, c.hacker_id;
