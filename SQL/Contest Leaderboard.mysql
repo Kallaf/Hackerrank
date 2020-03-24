@@ -1,0 +1,6 @@
+select h.hacker_id,h.name,sum(s.mx) as total
+from (select max(score) as mx,hacker_id as hid from submissions group by challenge_id,hid) as s
+join hackers as h on h.hacker_id = s.hid
+group by h.hacker_id, h.name
+having total <> 0
+order by total desc,h.hacker_id;
