@@ -1,0 +1,14 @@
+set @i = 0,@j = 0;
+select s.sd,t.ed
+from (SELECT  (@i:=@i + 1) AS idx,start_date as sd 
+      FROM    projects m 
+      WHERE   NOT EXISTS
+      (SELECT  1 FROM    projects e WHERE   e.end_date = m.start_date) 
+      order by start_date) as s
+join (SELECT  (@j:=@j + 1) AS idx,end_date as ed 
+      FROM    projects m
+      WHERE   NOT EXISTS
+      (SELECT  1 FROM    projects e WHERE   e.start_date = m.end_date) 
+      order by start_date) as t
+on s.idx = t.idx
+order by (t.ed - s.sd) , s.sd;
