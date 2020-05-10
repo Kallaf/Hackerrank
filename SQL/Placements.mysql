@@ -1,0 +1,16 @@
+select students.name 
+from students
+join
+(
+    select stpk.id as id, stpk.ss as salary, frpk.fs as fsalary
+    from 
+        (select friends.id as id, Packages.salary as ss
+        from friends
+        join packages on friends.id = packages.id) stpk
+    join
+        (select friends.id as id, friends.friend_id as fid, Packages.salary as fs
+        from friends
+        join packages on friends.friend_ID = packages.id) frpk
+    on stpk.id = frpk.id and stpk.ss < frpk.fs 
+) stfr on students.id = stfr.id
+order by stfr.fsalary;
